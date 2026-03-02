@@ -276,7 +276,7 @@ def best_single_generator(w, n, progress_every=0):
     return best  # (tot_rot, g, u_list) or None
 
 # ---------- two-generator search (heuristic but effective) ----------
-def best_pair_from_top_singles(w, n, top_m=50, progress_every=0):
+def best_pair_from_top_singles(w, n, top_m=10, progress_every=0):
     """
     Practical search for medium n (e.g., 2048/4096):
       1) brute-force all single g to get tot_rot and keep top_m best g's
@@ -334,7 +334,7 @@ def main():
     ap.add_argument("--w", type=int, default=512, help="expanded coeff count w (power of two)")
     ap.add_argument("--g", type=int, default=-1, help="generator g (odd)")
     ap.add_argument("--h", type=int, default=-1, help="generator h (odd)")
-    ap.add_argument("--top_m", type=int, default=50, help="top-M singles used for pair search")
+    ap.add_argument("--top_m", type=int, default=10, help="top-M singles used for pair search")
     ap.add_argument("--progress", type=int, default=0, help="print progress every K iterations (0 disables)")
     ap.add_argument("--search_pair", action="store_true", help="search best pair among top-M singles")
     ap.add_argument("--search_single", action="store_true", help="search best single generator")
@@ -376,8 +376,8 @@ def main():
         print(f"best_pair_g={g}, best_pair_h={h}")
         print(f"u_list={u_list}")
         print(f"tot_rot={tot_rot}")
-        print("\nSearched top singles (tot_rot, g) for reference:")
-        for (t, gg, _) in top[:min(len(top), args.top_m):]:
+        print(f"\nSearched top {min(20, args.top_m)} singles (tot_rot, g) for reference:")
+        for (t, gg, _) in top[:min(len(top), min(20, args.top_m))]:
             print(f"  {t:8d}  g={gg}")
 
 if __name__ == "__main__":

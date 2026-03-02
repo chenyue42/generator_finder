@@ -3,7 +3,7 @@ This is a quick python script for finding good generators for the query expansio
 
 Note that a similar idea/technique is used in [InspiRING](https://eprint.iacr.org/2025/1352.pdf#section.3) as well.
 
-For the single generator case, the code finds the same generator as WhisPIR does. The two generator case can reduce the number of the required rotation by ~6x.
+For the single generator case, the code finds the same generator as WhisPIR does. The two generator case can reduce the number of the required rotation by 1.3 ~ 18.6 $\times$ (saves more with more levels); the three generator case saves up to 40 $\times$.
 
 ### How to use
 - Just evaluate one pair
@@ -22,5 +22,5 @@ python3 two_gen_bfs.py --n 4096 --w 512 --search_pair --top_m 20
 ```
 
 ### Acknowledgement
-Thanks ChatGPT 5.2 for helping me to formalize the ideas and writing the code :)))
+Thanks ChatGPT 5.2 for helping me formalize the ideas and write the code :)))
 
