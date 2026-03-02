@@ -222,7 +222,6 @@ def eval_pair(g, h, w, n, verbose=True, show_paths=True):
         print("tot_rot=", tot_rot)
 
     if verbose and show_paths:
-        mod = 2 * n
         print("\n--- shortest paths (one example per k_i) ---")
         for i, k in enumerate(ks):
             if u_list[i] is None:
@@ -232,15 +231,16 @@ def eval_pair(g, h, w, n, verbose=True, show_paths=True):
                 print(f"k={k}: (failed to reconstruct)")
                 continue
 
-            # Make a compact "word" like gghhg...
-            word = "".join(moves)
+            # Count how many times we used g vs h along THIS shortest path
+            cnt_g = sum(1 for m in moves if m == 'g')
+            cnt_h = len(moves) - cnt_g
 
-            # Also show the node sequence (can be long; ok for small n)
-            # For large n, you may prefer to print only the word.
-            print(f"i={i:2d}, k={k:5d}, u_i={u_list[i]:3d}: word={word}")
-            # Uncomment if you want the actual visited residues too:
-            # print("    nodes:", " -> ".join(map(str, nodes)))
+            print(f"i={i:2d}, k={k:5d}, u_i={u_list[i]:3d}: {g}^{cnt_g} * {h}^{cnt_h}")
+            # If you also want the raw word, uncomment:
+            # print("    word =", "".join(moves))
 
+            # ! You should verify this before actual use. 
+            # ! Check that {g}^{cnt_g} * {h}^{cnt_h} mod 2n actually equals k.
     return ok, u_list, tot_rot
 
 
